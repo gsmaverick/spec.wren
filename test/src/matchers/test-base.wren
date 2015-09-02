@@ -60,7 +60,9 @@ var TestBaseMatchers = Suite.new("BaseMatchers") { |it|
     }
 
     it.should("be true for user-defined classes") {
-      class Foo {}
+      class Foo {
+        construct new() {}
+      }
 
       matcher = BaseMatchers.new(Foo.new())
       var matchResult = Fiber.new {
