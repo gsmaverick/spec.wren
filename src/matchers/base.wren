@@ -79,11 +79,70 @@ class BaseMatchers {
     report_(_value == other, message)
   }
 
+  /**
+   * Asserts that the value is deeply equal to the given value.
+   *
+   * @param {*} other Object that this value should be deeply equal to.
+   */
+  toDeepEqual (other) {
+    var message = "Expected " + _value.toString + " to deeply equal " +  other.toString
+    report_(isDeeplyEqual_(_value, other), message)
+  }
+
   report_ (result, message) {
     result = _negated ? !result : result
 
     var expectation = Expectation.new(result, message)
     Fiber.yield(expectation)
+  }
+
+  isDeeplyEqual_ (a, b) {
+    if (a == b) {
+      return true
+    }
+    if (a.type != b.type) {
+      return false
+    }
+
+    if (a is List) {
+      return sequenceIsEqual_(a, b)
+    }
+
+    if (a is Map) {
+      return mapIsEqual_(a, b)
+    }
+
+    return false
+  }
+
+  sequenceIsEqual_ (a, b) {
+    if (a.count != b.count) {
+      return false
+    }
+
+    var i = 0
+    while (i < a.count) {
+      if (!isDeeplyEqual_(a[i], b[i])) {
+        return false
+      }
+      i = i + 1
+    }
+
+    return true
+  }
+
+  mapIsEqual_ (a, b) {
+    if (a.keys.count != b.keys.count) {
+      return false
+    }
+
+    for (key in a.keys) {
+      if (!isDeeplyEqual_(a[key], b[key])) {
+        return false
+      }
+    }
+
+    return true
   }
 
   /**
