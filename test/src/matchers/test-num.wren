@@ -9,6 +9,7 @@ var TestNumMatchers = Suite.new("NumMatchers") { |it|
   it.suite("#toBeGreaterThan") { |it|
     it.should("return true for a user-defined class") {
       class UserDefined {
+        construct new() {}
         > (other) { true }
       }
 
@@ -46,6 +47,7 @@ var TestNumMatchers = Suite.new("NumMatchers") { |it|
   it.suite("#toBeLessThan") { |it|
     it.should("return true for a user-defined class") {
       class UserDefined {
+        construct new() {}
         < (other) { true }
       }
 
@@ -83,6 +85,7 @@ var TestNumMatchers = Suite.new("NumMatchers") { |it|
   it.suite("#toBeBetween") { |it|
     it.should("return true for a user-defined class") {
       class UserDefined {
+        construct new() {}
         < (other) { true }
         > (other) { true }
       }
