@@ -218,4 +218,20 @@ var TestBaseMatchers = Suite.new("BaseMatchers") { |it|
           "Expected string to equal value")
     }
   }
+
+  it.suite("#toDeepEqual") { |it|
+    it.should("pass for deeply equal objects") {
+      var a = {"a": 1, "b": false, "c": [1, 2, 3], "d": {"e": [4, 5, 6]}}
+      var b = {"a": 1, "b": false, "c": [1, 2, 3], "d": {"e": [4, 5, 6]}}
+
+      Expect.call(a).toDeepEqual(b)
+    }
+
+    it.should("fail for unequal objects") {
+      var a = {"a": 1, "b": false, "c": [1, 2, 3], "d": {"e": [4, 5, 6]}}
+      var b = {"a": 1, "b": false, "c": [1, 2, 3], "d": {"e": [4, 5000, 6]}}
+
+      Expect.call(a).not.toDeepEqual(b)
+    }
+  }
 }
